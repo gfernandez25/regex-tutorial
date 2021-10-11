@@ -33,14 +33,14 @@ Anchors in regular expressions are represented by the caret `^` and dollar sign 
 
 In our email sample we use caret `^` at the start of the expression `/^([a-z0-9_\.-]+)...` in order to match what comes immediately after it. We also using grouping by placing multiple tokens inside a parenthesis so our caret will apply to this group.
 
-it will match any alphanumeric combination and it can include the underscore `_`, dash `-` or dot `.` characters.
+it will take advantage of Character Classes/Sets and match any alphanumeric combination (lower case), including the underscore `_`, dash `-` or dot/period `. ` characters.
 
 valid examples:  jerry, jerry1, jerry_1, jerry-1, jerry.1\
 invalid examples: jerry%, jerry&
 
-We are also using the dollar sign `$` at the end of the expression in order to match the tokens grouped inside the preceding parenthesis. `([a-z\.]{2,6})$`
+We are also using the dollar sign `$` at the end of the expression in order to match the tokens grouped inside the preceding parenthesis and square brackets. `([a-z\.]{2,6})$`
 
-in this case we will only accept alpha characters (letters) and the dot `. ` character and must match between 2 and 6 of the preceding tokens (see quantifiers below)
+in this case we will only accept letters characters (lowercase), the dot/period `. ` character and must match between 2 and 6 of the preceding tokens (see quantifiers below)
 
 valid examples: .com, io, .co.uk
 
@@ -48,9 +48,9 @@ valid examples: .com, io, .co.uk
 Quantifiers specify how many instances of a character, group, or character class must be present in the input for a match to be found https://docs.microsoft.com/en-us/dotnet/standard/base-types/quantifiers-in-regular-expressions. The following quantifiers are examples of what is available for use in regular expressions
 * `*`       - Match zero or more times
 * `+`       - Match 1 or more times
-* `?`       - Match zero or one time.
-* `{ n }`   - Match exactly n times.
-* `{n , m}` - Match from n to m times.
+* `? `       - Match zero or one time.
+* ` {n}`   - Match exactly n times.
+* ` {n, m} ` - Match from n to m times.
 
 
 in our example we use the plus sign `+` and {2,6} as quantifiers. the plus sign `+` appears right after the closing of the square brackets in `([a-z0-9_\.-]+)` and `([\da-z\.-]+)` which indicates that we need at least one of the tokens in the square brackets to match in order to validate the expression. by using the plus sign quantifier in this case, we make sure not to allow for a null group (Match 1 or more times). The {2,6} quantifier means that we must match between 2 and 6 of the preceding tokens
@@ -66,31 +66,68 @@ invalid examples for `([a-z\.]{2,6})`: c, 1122222222 no tokens present
 
 ### OR Operator
 
+The Or operator is not specifically used in this regular expression. However, it can be achieved in regular expressions by the use of this `|` character. This will match the characters to the left or right of `|`.
+
+it is important to notice that in our example, tokens inside the square brackets will act as an Or
+* [a-z0-9_\.-] will match any lowercase letter `Or` Digit `Or` dot `Or` dash
+
 ### Character Classes
+
+Character Classes or Character Sets allows us to match any symbol from a character set. They are usually represented by square brackets but can also be represented with a `\` in front of a predefined letter. an example of this can be seen in our regular expression
+
+* Part of this section `[a-z0-9_\.-]` will match any digits between 0 and 9 by using a range `0-9`
+
+* This section `[\da-z\.-]` achieves the same matching for numbers by introducing `\d'
+
+Please see bracket expressions below for a more in-depth analysis
 
 ### Flags
 
-the forward slash component `/` indicate the start and end of a regular expression. After the closing forward slash, expression flags can be added
+Flags are not used in this regular expression. However, the forward slash components `/` indicates the start and end of a regular expression. After the closing forward slash, expression flags can be added. some examples can be `g` for global search or `m` for multiline
 
 ### Grouping and Capturing
 
-By placing part of a regular expression inside round brackets or parentheses, you can group that part of the regular expression together.
+By placing part of a regular expression inside round brackets or parentheses, you can group that part of the regular expression together and apply quantifier as described in the Quantifiers section. these groups can be referenced in a replacement
 
 ### Bracket Expressions
+A bracket expression is a list of characters enclosed by ‘[’ and ‘]’. We can use bracket expressions to match single characters in a list, or a range of characters in a list. In our example we can see the use of bracket expressions by looking at the characters inside the square brackets `[...]`
 
-- must be at the end so is not treated as a range generator
+* `[a-z0-9_\.-]` it will match any alphanumeric combination and it can include the underscore `_`, dash `-` or dot/period `.` characters.\
+-
+    - valid examples: just1ne, justine_2, just.ine
+    - invalid examples: just&, just%
+* `[\da-z\.-]` it will match any digit and letter combination and it can include the dash `-` or dot/period `.`
+-
+    - valid examples: google, net1, just.ine\
+    - invalid examples: just&, just_
+* `[a-z\.]` it will match any letter combination and it can include a dot/period `.`\
+- 
+    - valid examples: .com, .co
+    - invalid examples: com&, net_
+
 
 ### Greedy and Lazy Match
-The quantities n and m are integer constants. Ordinarily, quantifiers are greedy; they cause the regular expression engine to match as many occurrences of particular patterns as possible. Appending the ? character to a quantifier makes it lazy; it causes the regular expression engine to match as few occurrences as possible
 
+This section applies to quantifiers like `*,+,?,{n},{n,m}` Quantifiers can be greedy (default) or lazy (by appending a `?` behind). When doing a Greedy match, they cause the regular expression engine to match as many occurrences of particular patterns as possible.
+
+When doing a Lazy Match, it causes the regular expression engine to match as few occurrences as possible
+
+in our example we use the plus sign `+` and {2,6} in their greedy forms to ensure that we don’t have empty sets
 
 ### Boundaries
 
+We are not using boundaries for our expression, however when creating a regex, we can use the metacharacter `\b` to find whole words. This is beyond the scope of this tutorial
+
 ### Back-references
+
+We are not using back-references for our expression, however they can be used in conjunction with parentheses to create a capturing group and match the same text as previously matched. This is beyond the scope of this tutorial
 
 ### Look-ahead and Look-behind
 
+We are not using Look-ahead and Look-behind in our expression and are beyond the scope of this tutorial
+
 ## Author
 
-A short section about the author with a link to the author's GitHub profile (replace with your information and a link to your profile)
-![image](https://user-images.githubusercontent.com/82284313/136739758-879440ef-53e9-4015-abe9-3d54c1d2b34a.png)
+My name is Guillermo Fernandez, I’m currently switching careers from the Health Care industry to the
+Technology Field. Having a blast while doing it!
+[GitHub profile](https://github.com/gfernandez25)
