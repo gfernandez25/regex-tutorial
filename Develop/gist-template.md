@@ -31,9 +31,9 @@ Anchors in regular expressions are represented by the caret `^` and dollar sign 
 * ^ – Use caret at the beginning of the text.
 * $ – Use the dollar sign for the end of the text.
 
-In our email sample we use caret `^` at the start of the expression `/^([a-z0-9_\.-]+)...` in order to match what comes immediately after it. We also using grouping by placing multiple tokens inside a parenthesis so our caret will apply to this group.
+In our email sample we use caret `^` at the start of the expression `/^([a-z0-9_\.-]+)...` in order to match what comes immediately after it. We use grouping by placing multiple tokens inside a parenthesis and square brackets so our caret will apply to this group.
 
-it will take advantage of Character Classes/Sets and match any alphanumeric combination (lower case), including the underscore `_`, dash `-` or dot/period `. ` characters.
+the caret will take advantage of Character Classes/Sets and match any alphanumeric combination (lower case), including the underscore `_`, dash `-` or dot/period `. ` characters.
 
 valid examples:  jerry, jerry1, jerry_1, jerry-1, jerry.1\
 invalid examples: jerry%, jerry&
@@ -66,18 +66,18 @@ invalid examples for `([a-z\.]{2,6})`: c, 1122222222 no tokens present
 
 ### OR Operator
 
-The Or operator is not specifically used in this regular expression. However, it can be achieved in regular expressions by the use of this `|` character. This will match the characters to the left or right of `|`.
+The Or operator is not specifically used in this regular expression. However, it can be achieved in regular expressions by the use of the `|` character. This will match the characters to the left or right of `|`.
 
-it is important to notice that in our example, tokens inside the square brackets will act as an Or
+It is important to notice that in our example, tokens inside the square brackets will act as an Or
 * [a-z0-9_\.-] will match any lowercase letter `Or` Digit `Or` dot `Or` dash
 
 ### Character Classes
 
-Character Classes or Character Sets allows us to match any symbol from a character set. They are usually represented by square brackets but can also be represented with a `\` in front of a predefined letter. an example of this can be seen in our regular expression
+Character Classes or Character Sets allows us to match any symbol from a character set. They are usually represented by square brackets but can also be represented with a `\` in front of a predefined letter; an example of this can be seen in our regular expression
 
-* Part of this section `[a-z0-9_\.-]` will match any digits between 0 and 9 by using a range `0-9`
+* This section `[a-z0-9_\.-]` will match any digits between 0 and 9 by using a range `0-9`
 
-* This section `[\da-z\.-]` achieves the same matching for numbers by introducing `\d'
+* This section `[\da-z\.-]` achieves the same matching for numbers/digits by using `\d'
 
 Please see bracket expressions below for a more in-depth analysis
 
@@ -87,23 +87,23 @@ Flags are not used in this regular expression. However, the forward slash compon
 
 ### Grouping and Capturing
 
-By placing part of a regular expression inside round brackets or parentheses, you can group that part of the regular expression together and apply quantifier as described in the Quantifiers section. these groups can be referenced in a replacement
+By placing part of a regular expression inside round brackets or parentheses, you can group that part of the regular expression together and apply a quantifier as described in the Quantifiers section. these groups can be referenced in a replacement or a substring extracted from them.
 
 ### Bracket Expressions
-A bracket expression is a list of characters enclosed by ‘[’ and ‘]’. We can use bracket expressions to match single characters in a list, or a range of characters in a list. In our example we can see the use of bracket expressions by looking at the characters inside the square brackets `[...]`
+A bracket expression is a list of characters enclosed by ‘[’ and ‘]’. We can use bracket expressions to match single characters or a range of characters in a list. In our example we can see the use of bracket expressions by looking at the characters inside the square brackets `[...]`
 
 * `[a-z0-9_\.-]` it will match any alphanumeric combination and it can include the underscore `_`, dash `-` or dot/period `.` characters.\
 -
-    - valid examples: just1ne, justine_2, just.ine
-    - invalid examples: just&, just%
+  - valid examples: just1ne, justine_2, just.ine
+  - invalid examples: just&, just%
 * `[\da-z\.-]` it will match any digit and letter combination and it can include the dash `-` or dot/period `.`
 -
-    - valid examples: google, net1, just.ine\
-    - invalid examples: just&, just_
+  - valid examples: google, net1, just.ine\
+  - invalid examples: just&, just_
 * `[a-z\.]` it will match any letter combination and it can include a dot/period `.`\
-- 
-    - valid examples: .com, .co
-    - invalid examples: com&, net_
+-
+  - valid examples: .com, .co
+  - invalid examples: com&, net_
 
 
 ### Greedy and Lazy Match
@@ -130,4 +130,4 @@ We are not using Look-ahead and Look-behind in our expression and are beyond the
 
 My name is Guillermo Fernandez, I’m currently switching careers from the Health Care industry to the
 Technology Field. Having a blast while doing it!
-[GitHub profile](https://github.com/gfernandez25)
+[Checkout my GitHub profile](https://github.com/gfernandez25)
